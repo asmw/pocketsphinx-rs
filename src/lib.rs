@@ -85,10 +85,11 @@ impl Drop for CmdLn {
     }
 }
 
-
 pub struct PsDecoder {
     raw: *mut bindings::ps_decoder_t,
 }
+
+unsafe impl Send for PsDecoder {}
 
 impl PsDecoder {
     pub fn init(config: CmdLn) -> Self {
