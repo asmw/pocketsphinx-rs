@@ -17,7 +17,7 @@ mod error;
 
 pub struct CmdLn {
     raw: *mut bindings::cmd_ln_t,
-    c_args: Vec<CString>,
+    _c_args: Vec<CString>,
 }
 
 impl CmdLn {
@@ -38,7 +38,7 @@ impl CmdLn {
         }
         Ok(CmdLn{
             raw: raw,
-            c_args: c_args,
+            _c_args: c_args,
         })
     }
 
