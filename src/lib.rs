@@ -17,6 +17,7 @@ mod error;
 
 pub struct CmdLn {
     raw: *mut bindings::cmd_ln_t,
+    _c_args: Vec<CString>,
 }
 
 impl CmdLn {
@@ -35,7 +36,10 @@ impl CmdLn {
         if raw.is_null() {
             return Err(Error);
         }
-        Ok(CmdLn{raw: raw})
+        Ok(CmdLn{
+            raw: raw,
+            _c_args: c_args,
+        })
     }
 
     pub unsafe fn get_str(&self, name: &str) -> &str {
@@ -81,10 +85,11 @@ impl Drop for CmdLn {
     }
 }
 
-
 pub struct PsDecoder {
     raw: *mut bindings::ps_decoder_t,
 }
+
+unsafe impl Send for PsDecoder {}
 
 impl PsDecoder {
     pub fn init(config: CmdLn) -> Self {
