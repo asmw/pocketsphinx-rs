@@ -4,8 +4,6 @@ use std;
 use std::ptr;
 use std::ffi::{CStr, CString, OsStr};
 
-use std::os::unix::ffi::OsStrExt;
-
 use super::{Error, Result};
 
 pub mod internal {
@@ -196,7 +194,7 @@ pub struct Jsgf {
 
 impl Jsgf {
     pub fn parse_file(filename: &OsStr) -> Result<Self> {
-        let filename_c = CString::new(filename.as_bytes()).unwrap();
+        let filename_c = CString::new(filename.to_str().unwrap().as_bytes()).unwrap();
         let raw = unsafe { bindings::jsgf_parse_file(filename_c.as_ptr(), ptr::null()) };
         if raw.is_null() {
             Err(Error)

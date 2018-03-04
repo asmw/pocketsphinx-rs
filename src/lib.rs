@@ -43,7 +43,7 @@ impl CmdLn {
         CStr::from_ptr(c_str).to_str().unwrap()
     }
 
-    pub unsafe fn get_int(&self, name: &str) -> i64 {
+    pub unsafe fn get_int(&self, name: &str) -> i32 {
         bindings::cmd_ln_int_r(self.raw, CString::new(name).unwrap().as_ptr())
     }
 
